@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="smoovio_core.send_confirmation_mail_listener"
+                 class="Smoovio\Bundle\CoreBundle\EventListener\SendConfirmationMailListener">
+            <argument type="service" id="mailer"/>
+            <argument type="service" id="twig" />
+            <argument>SmoovioPortalBundle:Mail:confirmation_mail.html.twig</argument>
+            <argument>noreply@smoovio.de</argument>
+            <tag name="kernel.event_listener" event="smoovio_core.new_account_created" method="onNewAccountCreated" />
+        </service>
+
+        <service id="smoovio_core.validator_unique_attribute" class="Smoovio\Bundle\CoreBundle\Validator\Constraints\UniqueAttributeValidator">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="validator.constraint_validator" alias="validator_unique_attribute"/>
+        </service>
+
+        <service id="smoovio_core.user.manager" class="Smoovio\Bundle\CoreBundle\User\Manager\UserManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <service id="smoovio_core.registration.handler" class="Smoovio\Bundle\CoreBundle\User\Registration\RegistrationFormHandler">
+            <argument type="service" id="smoovio_core.user.manager" />
+        </service>
+
+        <service id="smoovio.slugify" class="Cocur\Slugify\Slugify" />
+
+        <service id="smoovio_core.command.generate_featured_list" class="Smoovio\Bundle\CoreBundle\Command\GenerateFeaturedMovieListCommand">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="console.command" />
+        </service>
+
+        <service id="smoovio_core.repository.movielist" class="Doctrine\ORM\EntityRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\MovieList</argument>
+        </service>
+        <service id="smoovio_core.repository.movie" class="Smoovio\Bundle\CoreBundle\Repository\MovieRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\Movie</argument>
+        </service>
+        <service id="smoovio_core.repository.role" class="Doctrine\ORM\EntityRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\Role</argument>
+        </service>
+        <service id="smoovio_core.repository.director" class="Doctrine\ORM\EntityRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\Director</argument>
+        </service>
+        <service id="smoovio_core.repository.actor" class="Doctrine\ORM\EntityRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\Actor</argument>
+        </service>
+        <service id="smoovio_core.repository.genre" class="Smoovio\Bundle\CoreBundle\Repository\GenreRepository">
+            <factory service="doctrine" method="getRepository" />
+            <argument>Smoovio\Bundle\CoreBundle\Entity\Genre</argument>
+        </service>
+    </services>
+</container>
