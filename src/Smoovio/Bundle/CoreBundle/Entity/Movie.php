@@ -12,9 +12,17 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\XmlAttribute;
+use JMS\Serializer\Annotation\XmlRoot;
 
 /**
  * @Entity(repositoryClass="Smoovio\Bundle\CoreBundle\Repository\MovieRepository")
+ * @ExclusionPolicy("ALL")
+ * @XmlRoot("movie")
  */
 class Movie
 {
@@ -22,6 +30,8 @@ class Movie
      * @Column(type="integer")
      * @Id
      * @GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @XmlAttribute
      */
     private $id;
 
@@ -29,6 +39,7 @@ class Movie
      * The movie's title. (Original version)
      *
      * @Column
+     * @Expose
      */
     private $title;
 
@@ -36,6 +47,7 @@ class Movie
      * A slug of the movie's title.
      *
      * @Column
+     * @Expose
      */
     private $slug;
 
@@ -43,6 +55,7 @@ class Movie
      * A short description of the movie's plot.
      *
      * @Column(type="text")
+     * @Expose
      */
     private $description;
 
@@ -50,6 +63,7 @@ class Movie
      * The movie's genre
      *
      * @ManyToOne(targetEntity="Genre")
+     * @Expose
      */
     private $genre;
 
@@ -57,6 +71,8 @@ class Movie
      * The movie's duration in seconds.
      *
      * @Column(type="integer")
+     * @Expose
+     * @Type("integer")
      */
     private $duration;
 
@@ -64,6 +80,9 @@ class Movie
      * The date the movie has been released first.
      *
      * @Column(type="datetime")
+     * @Expose
+     * @SerializedName("release")
+     * @Type("DateTime<'Y-m-d'>")
      */
     private $releaseDate;
 

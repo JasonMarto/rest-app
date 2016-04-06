@@ -15,10 +15,11 @@ class MovieRepository extends AbstractRepository
     {
         $q = $this
             ->createQueryBuilder('m')
-            ->select('m, g, r, a')
+            /*->select('m, d, g, r, a')
+            ->leftJoin('m.directors', 'd')
             ->leftJoin('m.roles', 'r')
             ->leftJoin('m.genre', 'g')
-            ->leftJoin('r.actor', 'a')
+            ->leftJoin('r.actor', 'a')*/
             ->where('m.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
