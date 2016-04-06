@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Smoovio\Bundle\CoreBundle\Entity\Genre;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
  * @Route("/genres")
@@ -36,8 +37,12 @@ class GenreController extends FOSRestController
      * @Post("", name="api_create_genre")
      * @ParamConverter("genre", converter="fos_rest.request_body")
      */
-    public function createGenreAction(Genre $genre)
+    public function createGenreAction(Genre $genre, ConstraintViolationList $violations)
     {
+        if (count($violations)) {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($genre);
         $em->flush();

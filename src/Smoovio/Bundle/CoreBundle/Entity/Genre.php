@@ -6,9 +6,21 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\XmlAttribute;
+use JMS\Serializer\Annotation\XmlRoot;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @Entity(repositoryClass="Smoovio\Bundle\CoreBundle\Repository\GenreRepository")
+ * @ExclusionPolicy("ALL")
+ * @XmlRoot("genre")
+ * 
+ * @UniqueEntity("slug")
  */
 class Genre
 {
@@ -16,16 +28,26 @@ class Genre
      * @Column(type="integer")
      * @Id
      * @GeneratedValue(strategy="AUTO")
+     * @Expose
+     * @XmlAttribute
      */
     private $id;
 
     /**
      * @Column
+     * @Expose
+     *
+     * @NotBlank
+     * @Length(min=5, max=100)
      */
     private $title;
 
     /**
      * @Column
+     * @Expose
+     *
+     * @NotBlank
+     * @Length(min=5, max=100)
      */
     private $slug;
 
