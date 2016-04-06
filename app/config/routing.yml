@@ -6,3 +6,7 @@ smoovio_api:
 smoovio_portal:
     resource: "@SmoovioPortalBundle/Resources/config/routing.yml"
     prefix:   /
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

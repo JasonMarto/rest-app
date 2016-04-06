@@ -12,6 +12,8 @@ abstract class AbstractRepository extends EntityRepository
     protected function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
     {
         $limit = (int) $limit;
+        $offset = (int) $offset;
+
         if (0 === $limit) {
             throw new \LogicException('$limit must be greater than 0.');
         }

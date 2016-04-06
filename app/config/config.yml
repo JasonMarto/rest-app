@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: services.xml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -109,9 +110,9 @@ fos_rest:
             - { path: '^/api', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
             - { path: '^/', priorities: [ 'html'], fallback_format: html }
 
-#nelmio_api_doc:
-#    name:                 'Smoovio API documentation'
-#    sandbox:
-#        body_format:
-#            formats: [form, json, xml]
-#            default_format: json
+nelmio_api_doc:
+    name:                 'Smoovio API documentation'
+    sandbox:
+        body_format:
+            formats: [form, json, xml]
+            default_format: json

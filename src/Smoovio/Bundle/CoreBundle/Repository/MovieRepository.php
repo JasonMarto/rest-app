@@ -49,8 +49,8 @@ class MovieRepository extends AbstractRepository
             ;
         }
 
-        //return $this->paginate($qb, $limit, $offset);
-        return $qb->getQuery()->execute();
+        return $this->paginate($qb, $limit, $offset);
+        //return $qb->getQuery()->execute();
     }
 
     /**

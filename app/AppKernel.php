@@ -17,6 +17,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Smoovio\Bundle\ApiBundle\SmoovioApiBundle(),
             new Smoovio\Bundle\CoreBundle\SmoovioCoreBundle(),
             new Smoovio\Bundle\PortalBundle\SmoovioPortalBundle(),

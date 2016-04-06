@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Hateoas\Configuration\Annotation\Embedded;
+use Hateoas\Configuration\Annotation\Relation;
+use Hateoas\Configuration\Annotation\Route;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\SerializedName;
@@ -23,6 +26,20 @@ use JMS\Serializer\Annotation\XmlRoot;
  * @Entity(repositoryClass="Smoovio\Bundle\CoreBundle\Repository\MovieRepository")
  * @ExclusionPolicy("ALL")
  * @XmlRoot("movie")
+ * 
+ * @Relation("self", href=@Route(
+ *    "api_get_movie",
+ *    parameters={
+ *      "id"="expr(object.getId())"
+ *    },
+ *    absolute=true
+ *  )
+ * )
+ * @Relation("genre", embedded=@Embedded(
+ *     "expr(object.getGenre())",
+ *     xmlElementName = "genre"
+ *   )
+ * )
  */
 class Movie
 {
@@ -63,7 +80,6 @@ class Movie
      * The movie's genre
      *
      * @ManyToOne(targetEntity="Genre")
-     * @Expose
      */
     private $genre;
 

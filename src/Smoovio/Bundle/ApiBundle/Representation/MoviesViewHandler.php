@@ -58,25 +58,25 @@ class MoviesViewHandler
 
         $links = [];
         if ($pager->getCurrentPage() > 1) {
-            $links['first'] = $this->generateUrl('smoovio_api_movies', array_merge($params, [
+            $links['first'] = $this->generateUrl('api_list_movies', array_merge($params, [
                 'offset' => $this->getOffset(1, $limit),
             ]));
         }
 
         if ($pager->hasPreviousPage()) {
-            $links['previous'] = $this->generateUrl('smoovio_api_movies', array_merge($params, [
+            $links['previous'] = $this->generateUrl('api_list_movies', array_merge($params, [
                 'offset' => $this->getOffset($pager->getPreviousPage(), $limit),
             ]));
         }
 
         if ($pager->hasNextPage()) {
-            $links['next'] = $this->generateUrl('smoovio_api_movies', array_merge($params, [
+            $links['next'] = $this->generateUrl('api_list_movies', array_merge($params, [
                 'offset' => $this->getOffset($pager->getNextPage(), $limit),
             ]));
         }
 
         if ($pager->getNbPages() != $page) {
-            $links['last'] = $this->generateUrl('smoovio_api_movies', array_merge($params, [
+            $links['last'] = $this->generateUrl('api_list_movies', array_merge($params, [
                 'offset' => $this->getOffset($pager->getNbPages(), $limit),
             ]));
         }
@@ -86,6 +86,6 @@ class MoviesViewHandler
 
     private function generateUrl($route, array $params = array())
     {
-        return $this->urlGenerator->generate($route, $params, true);
+        return $this->urlGenerator->generate($route, $params, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }
